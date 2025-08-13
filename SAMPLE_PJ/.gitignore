@@ -1,0 +1,8 @@
+# macOS
+.DS_Store
+
+# Node (念のため)
+node_modules/
+dist/
+build/
+

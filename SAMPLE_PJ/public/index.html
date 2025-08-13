@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CSV → JSON コンバーター | SAMPLE_PJ</title>
+    <meta name="description" content="最短で公開と収益化を体験できる静的MVPのサンプル。ブラウザだけでCSVをJSONに変換。" />
+    <link rel="stylesheet" href="./style.css" />
+    <script defer src="./config.js"></script>
+    <script defer src="./app.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <div class="branding">SAMPLE_PJ</div>
+        <nav><a id="pro-button" class="button primary" href="#">Pro版を購入</a></nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <h1>CSV → JSON コンバーター</h1>
+        <p>ブラウザだけで、安全・高速に変換。ファイルは外部に送信されません。</p>
+        <div class="cta">
+          <a id="hero-pro" class="button primary" href="#">Pro版を購入（外部決済）</a>
+          <a class="button" href="./thanks.html">サンプル: サンクスページ</a>
+        </div>
+      </section>
+
+      <section class="tool">
+        <h2>コンバーター</h2>
+        <div class="grid">
+          <div>
+            <label class="label">CSV入力</label>
+            <textarea id="csv-input" placeholder="name,age\nAlice,30\nBob,25" rows="10"></textarea>
+            <div class="row">
+              <input type="file" id="csv-file" accept=".csv,text/csv" />
+              <button id="clear-input" class="button">クリア</button>
+            </div>
+            <div class="row">
+              <label><input type="checkbox" id="has-header" checked /> 先頭行をヘッダーとして扱う</label>
+            </div>
+            <button id="convert" class="button primary">変換する</button>
+          </div>
+          <div>
+            <label class="label">JSON出力</label>
+            <textarea id="json-output" rows="10" placeholder="[]" readonly></textarea>
+            <div class="row">
+              <button id="copy-json" class="button">コピー</button>
+              <button id="download-json" class="button">JSONをダウンロード</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="pro">
+        <h2>Proでできること（例）</h2>
+        <ul>
+          <li>複数CSVの一括変換とZip出力</li>
+          <li>JSONスキーマ検証と整形</li>
+          <li>設定の保存と再利用</li>
+        </ul>
+        <p>まずは公開と収益化を最短で体験するため、Pro機能のロック解除は後日追加を想定しています。</p>
+        <a id="pro-button-bottom" class="button primary" href="#">Pro版を購入</a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <small>© 2025 SAMPLE_PJ. すべてブラウザ内で処理されます。</small>
+      </div>
+    </footer>
+  </body>
+  </html>
+
