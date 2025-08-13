@@ -100,6 +100,23 @@
       reader.readAsText(f);
     });
 
+    // Drag & drop highlight on tool section
+    const toolSection = document.querySelector('.tool');
+    if (toolSection) {
+      const onDragOver = (e) => { e.preventDefault(); toolSection.classList.add('dragover'); };
+      const onDragEnd = () => toolSection.classList.remove('dragover');
+      ['dragenter','dragover'].forEach((evt) => toolSection.addEventListener(evt, onDragOver));
+      ['dragleave','drop'].forEach((evt) => toolSection.addEventListener(evt, onDragEnd));
+      toolSection.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+        if (!f) return;
+        const reader = new FileReader();
+        reader.onload = () => { txtIn.value = String(reader.result || ''); };
+        reader.readAsText(f);
+      });
+    }
+
     btnClear.addEventListener('click', () => {
       txtIn.value = '';
       txtOut.value = '';
@@ -113,13 +130,22 @@
       } catch (e) {
         txtOut.value = `変換エラー: ${e?.message || e}`;
       }
+      // visual feedback
+      txtOut.classList.remove('flash');
+      // force reflow to restart animation
+      void txtOut.offsetWidth;
+      txtOut.classList.add('flash');
+      btnConvert.classList.add('success');
+      setTimeout(() => btnConvert.classList.remove('success'), 700);
     });
 
     btnCopy.addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(txtOut.value);
         btnCopy.textContent = 'コピー済み!';
+        btnCopy.classList.add('success');
         setTimeout(() => (btnCopy.textContent = 'コピー'), 1200);
+        setTimeout(() => btnCopy.classList.remove('success'), 1200);
       } catch (_) {}
     });
 
@@ -139,8 +165,35 @@
         }
       });
     });
+
+    // Reveal-on-scroll for main sections
+    const revealTargets = document.querySelectorAll('.hero, .tool, .pro');
+    revealTargets.forEach((el) => el.classList.add('reveal-on-scroll'));
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            // Unobserve once visible for performance
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    revealTargets.forEach((el) => io.observe(el));
+
+    // Header state on scroll
+    function updateScrollState() {
+      if (window.scrollY > 8) {
+        document.body.classList.add('scrolled');
+      } else {
+        document.body.classList.remove('scrolled');
+      }
+    }
+    updateScrollState();
+    window.addEventListener('scroll', updateScrollState, { passive: true });
   }
 
   document.addEventListener('DOMContentLoaded', attachHandlers);
 })();
-
